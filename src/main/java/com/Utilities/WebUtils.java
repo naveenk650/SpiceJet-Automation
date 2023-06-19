@@ -2,9 +2,11 @@ package com.Utilities;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.io.File;import java.time.Duration;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +29,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class WebUtils extends FileUtils {
 
+	
 	public static WebDriver driver = null;
 	public static Actions act ;
 	public static Select sel;
@@ -72,6 +75,7 @@ public class WebUtils extends FileUtils {
 			e.printStackTrace();
 		}
 		driver.manage().window().maximize();
+		implicitWait(10);
 		return flag;
 	}
 
@@ -113,6 +117,7 @@ public class WebUtils extends FileUtils {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, value);
 			wait.until(ExpectedConditions.visibilityOf(element));
+			wait.until(ExpectedConditions.elementToBeClickable(element));
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -134,6 +139,7 @@ public class WebUtils extends FileUtils {
 	public static boolean clickbtn(WebElement element) {
 		boolean flag= false;
 		try {
+			explicitWait(element, 10);
 			element.click();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,6 +150,7 @@ public class WebUtils extends FileUtils {
 	public static boolean sendkey(WebElement element, String value) {
 		boolean flag = false;
 		try {
+			explicitWait(element, 10);
 			element.sendKeys(value);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,6 +166,19 @@ public class WebUtils extends FileUtils {
 			e.printStackTrace();
 		}
 		return  flag;
+	}
+	
+	public static boolean windowHandles() {
+		boolean flag = false;
+		try {
+			Set<String> alldata = driver.getWindowHandles();
+			for (String data: alldata) {
+			driver.switchTo().window(data).getTitle();	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return flag;
 	}
 
 	public static void naviBack() {
@@ -201,6 +221,7 @@ public class WebUtils extends FileUtils {
 	public static boolean mouseClick(WebElement element) {
 		boolean flag = false;
 		try {
+			explicitWait(element, 10);
 			act = new Actions(driver);
 			act.click().perform();
 		}
@@ -238,6 +259,7 @@ public class WebUtils extends FileUtils {
 	public static String getText(WebElement element) {
 		String value = null;
 		try {
+			explicitWait(element, 5);
 			value = element.getText();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -304,6 +326,7 @@ public class WebUtils extends FileUtils {
 
 	public static void getScreenShot(String screenshotName ){
 		try {
+			implicitWait(5);
 			TakesScreenshot ts = (TakesScreenshot) driver;
 			File source = ts.getScreenshotAs(OutputType.FILE);
 			File destination = new File("./Screenshots/"+screenshotName+".png");
@@ -312,9 +335,36 @@ public class WebUtils extends FileUtils {
 			e.printStackTrace();
 		}
 	} 
+	
+	public static void alertNo() {
+		try {
+			driver.switchTo().alert().dismiss();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void jsclick(WebElement element) {
+		try {
+			explicitWait(element, 20);
+			JavascriptExecutor js = (JavascriptExecutor)driver;
+			js.executeScript("arguments[0].click();",element);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
 
-
-
-
-
+	}
+	
+	public static void frameIn(WebElement element) {
+		explicitWait(element, 10);
+		driver.switchTo().frame(element);
+	}
+	
+	public static void frameOut() {
+		driver.switchTo().defaultContent();
+	}
+	
+	
+	
 }

@@ -28,7 +28,7 @@ public class BaseClass extends WebUtils{
 
 	@AfterMethod(alwaysRun=true)
 	public void aftermethod() {
-		browserClose();
+	//   browserClose();
 		stopReport();
 
 
