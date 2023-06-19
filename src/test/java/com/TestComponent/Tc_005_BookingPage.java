@@ -9,7 +9,7 @@ import com.PageComponent.Search_Flights;
 
 public class Tc_005_BookingPage extends BaseClass{
 	@Test
-	public void booking_validation() throws Throwable {
+	public void booking_validation(){
 		try {
 			Booking_Page bp = new Booking_Page();
 			Search_Flights sf = new Search_Flights();

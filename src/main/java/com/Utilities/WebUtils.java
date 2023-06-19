@@ -2,10 +2,12 @@ package com.Utilities;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
-import java.io.File;import java.time.Duration;
+import java.io.File;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -29,7 +31,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class WebUtils extends FileUtils {
 
-	
+
 	public static WebDriver driver = null;
 	public static Actions act ;
 	public static Select sel;
@@ -167,13 +169,13 @@ public class WebUtils extends FileUtils {
 		}
 		return  flag;
 	}
-	
+
 	public static boolean windowHandles() {
 		boolean flag = false;
 		try {
 			Set<String> alldata = driver.getWindowHandles();
 			for (String data: alldata) {
-			driver.switchTo().window(data).getTitle();	
+				driver.switchTo().window(data).getTitle();	
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -326,7 +328,7 @@ public class WebUtils extends FileUtils {
 
 	public static void getScreenShot(String screenshotName ){
 		try {
-			implicitWait(5);
+			implicitWait(10);
 			TakesScreenshot ts = (TakesScreenshot) driver;
 			File source = ts.getScreenshotAs(OutputType.FILE);
 			File destination = new File("./Screenshots/"+screenshotName+".png");
@@ -335,7 +337,7 @@ public class WebUtils extends FileUtils {
 			e.printStackTrace();
 		}
 	} 
-	
+
 	public static void alertNo() {
 		try {
 			driver.switchTo().alert().dismiss();
@@ -343,7 +345,7 @@ public class WebUtils extends FileUtils {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void jsclick(WebElement element) {
 		try {
 			explicitWait(element, 20);
@@ -352,19 +354,30 @@ public class WebUtils extends FileUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
+
 
 	}
-	
+
 	public static void frameIn(WebElement element) {
-		explicitWait(element, 10);
-		driver.switchTo().frame(element);
+		try {
+			explicitWait(element, 10);
+			driver.switchTo().frame(element);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public static void frameOut() {
-		driver.switchTo().defaultContent();
+		try {
+			driver.switchTo().defaultContent();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
-	
-	
+
+
 }
+
+
+
+

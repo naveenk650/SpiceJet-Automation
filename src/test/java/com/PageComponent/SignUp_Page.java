@@ -57,20 +57,25 @@ public class SignUp_Page extends WebUtils {
 	}
 
 	public void signupCode() throws Throwable {
-		clickbtn(signup);
-		implicitWait(3);
-		windowHandles();
-		selectDownVisible(titleselect, "Mr");
-		sendkey(firstnametext, "naveen");
-		sendkey(lastnametext, "kumar");
-		sendkey(dobtext, "07/29/1991");
-		selectDownVisible(countryselect, "India");
-		sendkey(phonetext, "9629312345");
-		sendkey(emailtext, "naveenk405@gmail.com");
-		sendkey(password, "Testing@123");
-		sendkey(confirmpassword, "Testing@123");
-		clickbtn(tcagree);
-		clickbtn(submitbtn);
+		try {
+			clickbtn(signup);
+			implicitWait(3);
+			windowHandles();
+			selectDownVisible(titleselect, "Mr");
+			sendkey(firstnametext, readProperty("fname"));
+			sendkey(lastnametext,readProperty("lname"));
+			sendkey(dobtext, readProperty("dob"));
+			selectDownVisible(countryselect, "India");
+			sendkey(phonetext, readProperty("mob"));
+			sendkey(emailtext, readProperty("email"));
+			sendkey(password, readProperty("Password"));
+			sendkey(confirmpassword, readProperty("Password"));
+			clickbtn(tcagree);
+			clickbtn(submitbtn);
+			getScreenShot("SignUp");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

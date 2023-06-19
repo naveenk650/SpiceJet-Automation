@@ -2,8 +2,10 @@ package com.PageComponent;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import com.Utilities.WebUtils;
+import com.aventstack.extentreports.Status;
 
 public class Booking_Page extends WebUtils {
 
@@ -54,33 +56,37 @@ public class Booking_Page extends WebUtils {
 
 	@FindBy (xpath = "//div[@data-testid='traveller-info-continue-cta']")
 	WebElement continuepayment;
-
 	
-
-
 	public Booking_Page(){
 		PageFactory.initElements(WebUtils.driver, this);}
 
-	public void booking_Code() throws Throwable {
+	public void booking_Code(){
 
-		clickbtn(Continue);
-		clickbtn(passportvalidity);
-		clickbtn(passportyear);
-		clickbtn(passportmonth);
-		clickbtn(passportday);
-		sendkey(firstname, "naveen");
-		sendkey(lastname, "kumar");
-		sendkey(emailtext, "kumar@gmail.com");
-		sendkey(mobile, "9876543210");
-		clickbtn(checkbox);
-		implicitWait(3);
-		clickbtn(dobclick);
-		clickbtn(year);
-		clickbtn(month);
-		clickbtn(day);
-		sendkey(passportno, "M8653356");
-		clickbtn(continuepayment);
-}
+		try {
+			test.log(Status.INFO, "Continued To Booking Page");
+			clickbtn(Continue);
+			clickbtn(passportvalidity);
+			clickbtn(passportyear);
+			clickbtn(passportmonth);
+			clickbtn(passportday);
+			sendkey(firstname, readProperty("fname"));
+			sendkey(lastname, readProperty("lname"));
+			sendkey(emailtext,readProperty("email"));
+			sendkey(mobile, readProperty("mob"));
+			clickbtn(checkbox);
+			implicitWait(3);
+			clickbtn(dobclick);
+			clickbtn(year);
+			clickbtn(month);
+			clickbtn(day);
+			sendkey(passportno, readProperty("passnumber"));
+			clickbtn(continuepayment);
+			test.log(Status.INFO, "Entered Customer Information");
+			} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
 }
 
 

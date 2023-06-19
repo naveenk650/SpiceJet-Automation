@@ -24,6 +24,7 @@ public class Homepage_fields extends WebUtils {
 
 	public void field_code() {
 		try {
+			
 			String text1 = getText(CheckIn);
 			Assert.assertEquals("Check-In", text1);
 			test.log(Status.PASS, text1+" : Validated Sucessfully");
@@ -33,10 +34,12 @@ public class Homepage_fields extends WebUtils {
 			String text3 = getText(ManageBooking);
 			Assert.assertEquals("Manage Booking", text3);
 			test.log(Status.PASS, text3+" : Validated Sucessfully");
+			implicitWait(10);
 			getScreenShot("HomepageFields");
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			test.log(Status.FAIL, "HomePage Validation Failed");
 		}
 
 
